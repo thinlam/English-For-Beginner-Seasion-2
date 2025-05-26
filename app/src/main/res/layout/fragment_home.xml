@@ -35,19 +35,20 @@
         android:layout_marginTop="12dp" />
 
     <!-- Giới thiệu cấp độ học -->
+
+    <!-- Nút hành động đẹp hơn (ĐƯA LÊN TRÊN TRƯỚC TIẾN ĐỘ) -->
     <TextView
         android:id="@+id/tv_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/level_intro"
-        android:textSize="16sp"
         android:textColor="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/tv_greeting"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="4dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_greeting" />
 
-    <!-- Nút hành động đẹp hơn (ĐƯA LÊN TRÊN TRƯỚC TIẾN ĐỘ) -->
     <LinearLayout
         android:id="@+id/ll_buttons"
         android:layout_width="389dp"

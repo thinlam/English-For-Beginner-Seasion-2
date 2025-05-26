@@ -17,5 +17,16 @@
     <string name="button_learn_vocab">Học từ vựng</string>
     <string name="button_take_quiz">Kiểm tra</string>
     <string name="daily_tip">💡 Mẹo: Học theo cụm từ giúp ghi nhớ lâu hơn</string>
+    <string name="login_title">Đăng nhập</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Mật khẩu</string>
+    <string name="btn_login">Đăng nhập</string>
+    <string name="link_register">Chưa có tài khoản? Đăng ký</string>
+    <string name="link_login">Đã có tài khoản? Đăng Nhập</string>
+    <string name="logo_efb">Biểu tượng EFB</string>
+    <string name="hint_fullname">Họ và tên</string>
+    <string name="btn_register">Đăng Ký</string>
+    <string name="register_title">Tạo tài khoản mới</string>
+    <string name="hint_confirm_password">Xác nhận mật khẩu</string>
 
 </resources>

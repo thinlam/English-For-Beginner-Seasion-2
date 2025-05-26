@@ -1,19 +1,21 @@
 package com.example.englishforbeginnerseasion2
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
 import com.example.englishforbeginnerseasion2.databinding.ActivityMainBinding
+import com.example.englishforbeginnerseasion2.ui.AuthActivity
+import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -26,29 +28,58 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
-        }
         val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
-            ), drawerLayout
+                R.id.nav_home,
+                R.id.nav_vocabulary,
+                R.id.nav_quiz,
+                R.id.nav_progress,
+                R.id.nav_settings // 👈 THÊM dòng này để hỗ trợ menu Cài đặt
+            ),
+            drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+
+        binding.navView.setNavigationItemSelectedListener(this)
     }
-
-
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+        when (item.itemId) {
+            R.id.menu_profile -> {
+                val prefs = getSharedPreferences("USER_PREFS", MODE_PRIVATE)
+                val name = prefs.getString("fullname", "Không rõ")
+                val email = prefs.getString("email", "Chưa có email")
+                Toast.makeText(this, "👤 $name\n📧 $email", Toast.LENGTH_LONG).show()
+            }
+
+            R.id.menu_logout -> {
+                getSharedPreferences("USER_PREFS", MODE_PRIVATE)
+                    .edit().putBoolean("isLoggedIn", false).apply()
+                startActivity(Intent(this, AuthActivity::class.java))
+                finish()
+            }
+
+            R.id.nav_settings -> {
+                navController.navigate(R.id.nav_settings) // 👈 Xử lý điều hướng tới fragment_settings
+            }
+
+            else -> {
+                NavigationUI.onNavDestinationSelected(item, navController)
+            }
+        }
+
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        return true
     }
 }
